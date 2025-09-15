@@ -77,17 +77,14 @@ ssh-copy-id vagrant@web03
 
   <h2>⏰ Cron Job Automation</h2>
   <pre>
-# Collect logs daily at 1 AM
-0 1 * * * /root/logvault/scripts/collect_logs.sh
 
-# Monitor logs daily at 2 AM
-0 2 * * * /root/logvault/scripts/monitor.sh
+0 1 * * * /root/logvault/scripts/collect_logs.sh    # Collect logs daily at 1 AM
 
-# Backup logs daily at 3 AM
-0 3 * * * /root/logvault/scripts/backup.sh
+0 2 * * * /root/logvault/scripts/monitor.sh    # Monitor logs daily at 2 AM
 
-# Generate dashboard at 3:15 AM
-15 3 * * * /root/logvault/scripts/generate_report.sh
+0 3 * * * /root/logvault/scripts/backup.sh    # Backup logs daily at 3 AM
+
+15 3 * * * /root/logvault/scripts/generate_report.sh     # Generate dashboard at 3:15 AM
   </pre>
 
   <h2>📂 Project Structure</h2>
@@ -98,9 +95,7 @@ logvault/
 │   ├── monitor.sh
 │   ├── backup.sh
 │   └── generate_report.sh
-├── archives/          # Compressed & versioned log backups (.tar.gz)
-├── reports/           # Generated HTML reports
-└── README.html
+├── backups/          # Compressed & versioned log backups (.tar.gz)
   </pre>
 
   <h2>🌐 Dashboard Example</h2>
@@ -119,14 +114,6 @@ logvault/
     <li>Use SSH key authentication instead of passwords.</li>
     <li>Limit logserver access to trusted administrators.</li>
     <li>Ensure Apache is configured with best practices (firewall, SELinux/AppArmor, TLS if public-facing).</li>
-  </ul>
-
-  <h2>💡 Future Enhancements</h2>
-  <ul>
-    <li>Email or Slack alert integration.</li>
-    <li>Real-time log streaming with WebSockets.</li>
-    <li>Extended monitoring for Nginx, MySQL, etc.</li>
-    <li>Integration with Elasticsearch + Kibana stack for advanced analysis.</li>
   </ul>
 
   <footer>
