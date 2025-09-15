@@ -1,54 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>LogVault — Centralized Log Management System</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: #f9fbfd;
-      color: #333;
-      line-height: 1.6;
-    }
-    h1, h2, h3 {
-      color: #222;
-    }
-    pre {
-      background: #282c34;
-      color: #f1f1f1;
-      padding: 10px;
-      border-radius: 5px;
-      overflow-x: auto;
-    }
-    code {
-      background: #eee;
-      padding: 2px 4px;
-      border-radius: 3px;
-      font-family: "Courier New", monospace;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-    }
-    .highlight {
-      background: #e6f7ff;
-      border-left: 4px solid #007acc;
-      padding: 10px;
-      margin: 15px 0;
-    }
-    ul {
-      margin: 0 0 0 20px;
-    }
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #666;
-    }
-  </style>
-</head>
+
 <body>
 <div class="container">
   <h1>📊 LogVault — Centralized Log Management System</h1>
