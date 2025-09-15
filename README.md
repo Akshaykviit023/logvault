@@ -5,6 +5,7 @@
 LogVault is a centralized log management and monitoring system built with Linux, Bash, Git, and Apache. It collects logs from multiple Linux servers (Ubuntu & CentOS), analyzes them for suspicious activity (e.g., failed SSH logins), archives them daily, and generates an HTML dashboard that is accessible via a web browser.
 
 🏗️ Architecture
+```
  ┌─────────────┐     ┌─────────────┐
  │   web01     │     │   web02     │
  │ (CentOS VM) │ ... │ (Ubuntu VM) │
@@ -28,6 +29,7 @@ LogVault is a centralized log management and monitoring system built with Linux,
                  │
                  ▼
         🌐 Web Dashboard (dashboard.html)
+```
 
 ⚙️ Features
 	•	Log Collection: Securely fetches /var/log/secure (CentOS) or /var/log/auth.log (Ubuntu) from remote servers.
