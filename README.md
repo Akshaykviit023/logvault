@@ -73,7 +73,7 @@ ssh-copy-id vagrant@web03
   <h3>3. Run Scripts</h3>
   <p>Create project structure, scripts and configure permission</p>
   <pre>
-    mkdir -p ~/logvault/scripts ~/logvault/logs
+mkdir -p ~/logvault/scripts ~/logvault/logs
 chmod 744 collect_logs.sh monitor.sh backup.sh generate_report.sh
   </pre>
   <p>Collect logs:</p>
@@ -87,20 +87,20 @@ chmod 744 collect_logs.sh monitor.sh backup.sh generate_report.sh
 
   <h3>4. Initialize Git Repository</h3>
   <pre>
-    git init
-    git status
-    git add .
-    git status
-    git commit -m "Initial commit - setup LogVault"
+git init
+git status
+git add .
+git status
+git commit -m "Initial commit - setup LogVault"
   </pre>
 
   <h3>5. Install and Configure Apache WebServer</h3>
   <pre>
-    yum install -y httpd
-    systemctl start httpd
-    systemctl enable httpd
-    systemctl stop firewalld   # disabled firewall for testing
-    ip addr | grep inet        # get server IP to access dashboard
+yum install -y httpd
+systemctl start httpd
+systemctl enable httpd
+systemctl stop firewalld   # disabled firewall for testing
+ip addr | grep inet        # get server IP to access dashboard
   </pre>
 
   <h3>6. Access Dashboard</h3>
@@ -108,7 +108,7 @@ chmod 744 collect_logs.sh monitor.sh backup.sh generate_report.sh
 
   <h2>⏰ Cron Job Automation</h2>
   <pre>
-    crontab -e
+crontab -e
   </pre>
   <pre>
 
