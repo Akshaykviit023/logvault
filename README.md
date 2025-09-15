@@ -1,11 +1,65 @@
-📊 LogVault — Centralized Log Management System
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LogVault — Centralized Log Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f9fbfd;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      color: #222;
+    }
+    pre {
+      background: #282c34;
+      color: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    code {
+      background: #eee;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: "Courier New", monospace;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .highlight {
+      background: #e6f7ff;
+      border-left: 4px solid #007acc;
+      padding: 10px;
+      margin: 15px 0;
+    }
+    ul {
+      margin: 0 0 0 20px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>📊 LogVault — Centralized Log Management System</h1>
+  <p>
+    LogVault is a <strong>centralized log management and monitoring system</strong> that simplifies log collection,
+    monitoring, archiving, and reporting across multiple Linux servers. It provides a
+    <strong>web-based dashboard</strong> to visualize security and login events, making it easy to detect suspicious activity.
+  </p>
 
-📌 Overview
-
-LogVault is a centralized log management and monitoring system built with Linux, Bash, Git, and Apache. It collects logs from multiple Linux servers (Ubuntu & CentOS), analyzes them for suspicious activity (e.g., failed SSH logins), archives them daily, and generates an HTML dashboard that is accessible via a web browser.
-
-🏗️ Architecture
-```
+  <h2>🏗️ System Architecture</h2>
+  <pre>
  ┌─────────────┐     ┌─────────────┐
  │   web01     │     │   web02     │
  │ (CentOS VM) │ ... │ (Ubuntu VM) │
@@ -29,65 +83,48 @@ LogVault is a centralized log management and monitoring system built with Linux,
                  │
                  ▼
         🌐 Web Dashboard (dashboard.html)
-```
+  </pre>
 
-⚙️ Features
-	•	Log Collection: Securely fetches /var/log/secure (CentOS) or /var/log/auth.log (Ubuntu) from remote servers.
-	•	Monitoring: Scans logs for failed/accepted SSH logins, raises alerts if thresholds are exceeded.
-	•	Backup & Archiving: Compresses daily logs into .tar.gz and versions them with Git.
-	•	Automation: Cron jobs handle collection, monitoring, backups, and report generation.
-	•	Web Dashboard: Bash-generated HTML reports served from /var/www/html/dashboard.html.
-	•	Cross-Distro Support: Handles both Ubuntu and CentOS log paths automatically.
+  <h2>⚙️ Features</h2>
+  <ul>
+    <li><strong>Centralized Log Collection</strong> – Secure SSH-based log retrieval from CentOS (<code>/var/log/secure</code>) and Ubuntu (<code>/var/log/auth.log</code>) servers.</li>
+    <li><strong>Monitoring & Alerts</strong> – Detects failed or successful SSH logins. Raises alerts if login thresholds are exceeded.</li>
+    <li><strong>Backup & Archiving</strong> – Daily logs are versioned and compressed into <code>.tar.gz</code> archives with Git history tracking.</li>
+    <li><strong>Automated Scheduling</strong> – Fully automated with cron jobs for collection, monitoring, backup, and report generation.</li>
+    <li><strong>Web Dashboard</strong> – An interactive <code>dashboard.html</code> generated with Bash, hosted via Apache.</li>
+    <li><strong>Cross-Distribution Support</strong> – Works seamlessly with both <em>Ubuntu</em> and <em>CentOS/RHEL</em> environments.</li>
+  </ul>
 
- 🚀 Setup
+  <h2>🚀 Setup</h2>
+  <h3>1. Environment</h3>
+  <ul>
+    <li><strong>1 central log aggregator VM</strong> → <code>logserver</code> (with Apache or httpd installed).</li>
+    <li><strong>Multiple app VMs</strong> → <code>web01</code>, <code>web02</code>, <code>web03</code> (Ubuntu or CentOS).</li>
+  </ul>
 
-1. Environment
-	•	1 central VM → logserver (with Apache or httpd installed depening on the os).
-	•	Multiple app VMs → web01, web02, web03 (Ubuntu/CentOS).
-
-2. Configure SSH Access
-
-On logserver:
-```
+  <h3>2. Configure SSH Access</h3>
+  <pre>
 ssh-keygen -t ed25519
 ssh-copy-id vagrant@web01
 ssh-copy-id vagrant@web02
 ssh-copy-id vagrant@web03
-```
+  </pre>
 
-3. Run Scripts
+  <h3>3. Run Scripts</h3>
+  <p>Collect logs:</p>
+  <pre>./scripts/collect_logs.sh</pre>
+  <p>Monitor logs:</p>
+  <pre>./scripts/monitor.sh</pre>
+  <p>Backup logs:</p>
+  <pre>./scripts/backup.sh</pre>
+  <p>Generate dashboard:</p>
+  <pre>./scripts/generate_report.sh</pre>
 
-Collect logs:
-```
-./scripts/collect_logs.sh
-```
+  <h3>4. Access Dashboard</h3>
+  <pre>http://&lt;logserver-ip&gt;/dashboard.html</pre>
 
-Monitor logs:
-```
-./scripts/monitor.sh
-```
-
-Backup logs:
-```
-./scripts/backup.sh
-```
-
-Generate dashboard:
-```
-./scripts/generate_report.sh
-```
-
-4. Access Dashboard
-
-Open in browser:
-```
-http://<logserver-ip>/dashboard.html
-```
-
-⏰ Cron Automation
-
-Add these to crontab -e on logserver:
-```
+  <h2>⏰ Cron Job Automation</h2>
+  <pre>
 # Collect logs daily at 1 AM
 0 1 * * * /root/logvault/scripts/collect_logs.sh
 
@@ -99,4 +136,50 @@ Add these to crontab -e on logserver:
 
 # Generate dashboard at 3:15 AM
 15 3 * * * /root/logvault/scripts/generate_report.sh
-```
+  </pre>
+
+  <h2>📂 Project Structure</h2>
+  <pre>
+logvault/
+├── scripts/
+│   ├── collect_logs.sh
+│   ├── monitor.sh
+│   ├── backup.sh
+│   └── generate_report.sh
+├── archives/          # Compressed & versioned log backups (.tar.gz)
+├── reports/           # Generated HTML reports
+└── README.html
+  </pre>
+
+  <h2>🌐 Dashboard Example</h2>
+  <p>
+    Once reports are generated, the web dashboard (e.g., <code>dashboard.html</code>) will display:
+  </p>
+  <ul>
+    <li>Failed SSH login attempts</li>
+    <li>Successful SSH logins</li>
+    <li>Alerts for anomalies</li>
+    <li>Historical log trends</li>
+  </ul>
+
+  <h2>🛡️ Security Considerations</h2>
+  <ul>
+    <li>Use SSH key authentication instead of passwords.</li>
+    <li>Limit logserver access to trusted administrators.</li>
+    <li>Ensure Apache is configured with best practices (firewall, SELinux/AppArmor, TLS if public-facing).</li>
+  </ul>
+
+  <h2>💡 Future Enhancements</h2>
+  <ul>
+    <li>Email or Slack alert integration.</li>
+    <li>Real-time log streaming with WebSockets.</li>
+    <li>Extended monitoring for Nginx, MySQL, etc.</li>
+    <li>Integration with Elasticsearch + Kibana stack for advanced analysis.</li>
+  </ul>
+
+  <footer>
+    <p>📌 LogVault — Centralized Log Management | Built with Linux, Bash, Git, Apache</p>
+  </footer>
+</div>
+</body>
+</html>
